@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" value="text/html; charset=utf8" />
+	<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+	<div class="content"></div>
+  
+	<button id="prevBtn" class="nav prev">&lt;&lt;</button>
+	<button id="nextBtn" class="nav next">&gt;&gt;</button>
+  
+	<div class="footer">
+		<div class="stripe stripe1"></div>
+		<div class="stripe stripe2"></div>
+		<div class="stripe stripe3"></div>
+		<div class="stripe stripe4"></div>
+		<div class="stripe stripe5"></div>
+		<div class="stripe stripe6"></div>
+		<span class="copyright">&copy; Martin Schuhfuß 2010</span>
+	</div>
+
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/showdown/src/showdown.js"></script>
+<script type="text/javascript" src="js/highlight/highlight.pack.js"></script>
+<script>
+// TODO: make slides nested, such that for the same heading multiple slides might exist and the headings aren't animated in that case
+// TODO: test embedding of images and other stuff...
+// TODO: introduce some sort of metadata to further customize the slides
+
+
+$(function() {
+    $.get('contents.md', generateSlides);
+    function generateSlides(response) {
+        var converter = new Showdown.converter();
+        
+        var tmp = $(converter.makeHtml(response));
+        
+        var currSlide = null;
+        var currTitle = null;
+        var newSlide = function() {
+            if(null !== currSlide) {
+                currSlide.clone().appendTo('.content');
+            }
+            
+            currSlide = $('<div class="slide"></div>');
+            if(null !== currTitle) {
+                currSlide.append(currTitle);
+            }
+        };
+
+        newSlide();
+
+        tmp.each(function(idx) {
+            var $this = $(this);
+            
+            if($this.is('hr')) { newSlide(); return; }
+            if($this.is('h1')) { // h1 creates a frontpage and adds itself to every following page
+                currTitle = $this;
+                currSlide.addClass('frontpage').append($this);
+                newSlide();
+                return;
+            }
+
+            currSlide.append($this);
+        });
+        
+        currSlide.appendTo('.content');
+
+		// Highlight syntax
+	    hljs.initHighlighting();
+		$('pre code').each(function() { hljs.highlightBlock(this, '    '); });
+
+        processSlides();
+    }
+    
+    function processSlides() {
+        // assign ids if not present
+        $('.slide').each(function(idx) {
+            var id = $(this).attr('id');
+            if(!id) { $(this).attr('id', "slide" + (idx+1)); }
+        });
+
+        // jump to a slide indicated by window.hash
+        if(window.location.hash) {
+            var $slide = $(window.location.hash+'.slide');
+            if(0 !== $slide.length) {
+                $('.slide.current').removeClass('current');
+                $slide.addClass('current');
+            }
+        }
+        
+        if(0 === $('.slide.current').length) {
+            $('.slide').first().addClass('current');
+        }
+    }
+	
+	var nextSlide=function() {
+        var nextId = $('.slide.current').next('.slide').attr('id');
+        if(nextId) {
+            window.location.hash = nextId;
+        }
+	};
+
+	var prevSlide=function() { 
+        var prevId = $('.slide.current').prev('.slide').attr('id');
+        if(prevId) {
+            window.location.hash = prevId;
+        }
+	};
+    
+    var jumpToSlide = function(id) {
+		var $curr = $('.slide.current');
+		var $next = $('.slide#'+id);
+        
+		if(0 === $next.length) { return false; }
+        
+		$curr.show().removeClass('current');
+		$next.hide().addClass('current');
+
+        $curr.fadeOut(500, function() { $next.fadeIn(500); });
+    };
+
+    // Navigation-handlers
+    window.onhashchange = function() {
+        var slideId=window.location.hash.replace('#', '');
+        jumpToSlide(slideId);
+    };
+
+	$('#nextBtn').click(nextSlide);
+	$('#prevBtn').click(prevSlide);
+	
+	$('body').keydown(function(e) {
+		switch(e.keyCode) {
+			case 39: case 32: nextSlide(); break;
+			case 37: case 8: prevSlide(); break;
+		}
+	});
+});
+</script>
+</body>
+<!--
+vim:ts=4:sw=4:expandtab
+-->
+</html>

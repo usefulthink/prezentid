@@ -1,0 +1,181 @@
+@font-face {
+	font-family: DIN;
+	src: url('fonts/DINOT-Regular.otf');
+}
+
+@font-face {
+	font-family: DIN;
+  font-weight: bold;
+	src: url('fonts/DINOT-Medium.otf');
+}
+	
+body {
+  margin:0 ; padding:0;
+	font-family: DINOT, sans-serif;
+	font-size: 28px;
+	color: white;
+	background-color: #85c128;
+  height: 100%;
+}
+
+h1 { margin: 0.5em 0 0 0; font-size: 40px; font-weight: normal; }
+.frontpage h1 { margin: 0.5em 0 0 0; font-size: 120px; font-weight: normal; }
+
+h2 { margin-bottom: 1em; font-size: 32px; font-weight: normal; }
+
+li {
+  width: 60%;
+  margin-bottom: 0.7em;
+}
+
+.content {
+  margin: 0 100px;
+}
+
+button.nav {
+  position: absolute;
+  bottom: 210px;
+  font-size: 24px;
+  background: rgba(255,255,255,0.5);
+
+  color: #85c128; font-weight: bold;
+  cursor: pointer;
+  text-align: left;
+  padding: 10px;
+  border: 2px solid white;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  z-index: 100;
+}
+
+button.prev { left: 20px; }
+button.next { right: 20px; }
+button.nav:hover { background: rgba(255,255,255,0.75); }
+
+.slide {
+  x-border: 1px solid white;
+}
+
+.slide { display: none; }
+.slide.current { display: block; }
+
+/** SYNTAX HIGHLIGHTING */
+
+/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+pre code {
+    display: block; width: 75%;
+    padding: 20px;
+    
+    color: #000;
+    font-size: 20px;
+    background: rgba(255,255,255,0.8);
+    border: 2px solid #6C6672;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+pre .comment, pre .template_comment, pre .diff .header, pre .javadoc {
+    color: #998;
+    font-style: italic
+}
+
+pre .keyword, pre .css .rule .keyword, pre .winutils, pre .javascript .title, pre .lisp .title, pre .subst {
+    color: #000;
+    font-weight: bold
+}
+
+pre .number, pre .hexcolor {
+    color: #40a070
+}
+
+pre .string, pre .attribute .value, pre .phpdoc {
+    color: #C088BE;
+}
+
+pre .title, pre .id {
+    color: #900;
+    font-weight: bold
+}
+
+pre .javascript .title, pre .lisp .title, pre .subst {
+    font-weight: normal
+}
+
+pre .class .title {
+    color: #458;
+    font-weight: bold
+}
+
+pre .tag, pre .css .keyword, pre .html .keyword, pre .tag .title, pre .django .tag .keyword {
+    color: #000080;
+    font-weight: normal
+}
+
+pre .attribute, pre .variable, pre .instancevar, pre .lisp .body {
+    color: #3B807B; font-weight: bold;
+}
+
+pre .regexp {
+    color: #009926
+}
+
+pre .class {
+    color: #458;
+    font-weight: bold
+}
+
+pre .symbol, pre .lisp .keyword {
+    color: #990073
+}
+
+pre .builtin, pre .built_in, pre .lisp .title {
+    color: #0086b3
+}
+
+pre .preprocessor, pre .pi, pre .doctype, pre .shebang, pre .cdata {
+    color: #999;
+    font-weight: bold
+}
+
+pre .deletion {
+    background: #fdd
+}
+
+pre .addition {
+    background: #dfd
+}
+
+pre .diff .change {
+    background: #0086b3
+}
+
+pre .chunk {
+    color: #aaa
+}
+
+
+
+/* FOOTER */
+.footer {
+	position: absolute; bottom: 0;
+
+	width: 100%; height: 200px;
+	background: white;
+	color: #a5a5a5;
+}
+  .copyright { font-size: 12px; float: right; margin-right: 10px; }
+  .stripe { width: 100%; height: 30px; }
+  .stripe1 { background-color: #3da49d; }
+  .stripe2 { background-color: #3b807b; }
+  .stripe3 { background-color: #6c6672; }
+  .stripe4 { background-color: #c088be; }
+  .stripe5 { background-color: #4b1846; }
+  .stripe6 { background-color: #512558; }
+/* vim: ts=2 sw=2 expandtab:
+*/
